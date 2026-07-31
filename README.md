@@ -2,22 +2,31 @@
 
 Real-Time Financial Monitor MVP built with:
 
-* Backend: .NET 8 Web API + SignalR
-* Database: SQLite + Entity Framework Core
-* Frontend: React + TypeScript
-* Testing: xUnit + Moq + FluentAssertions
+- Backend: .NET 8 Web API + SignalR
+- Database: SQLite + Entity Framework Core
+- Frontend: React + TypeScript
+- Testing: xUnit + Moq + FluentAssertions
 
-# Prerequisites
 
-For running with Docker:
+## Overview
 
-* Docker Desktop
+Financial Monitor is a real-time transaction monitoring system.
+
+The application allows creating simulated financial transactions and receiving live updates through SignalR.
+
+
+## Prerequisites
+
+For running the application:
+
+- Docker Desktop
 
 For running tests locally:
 
-* .NET 8 SDK
+- .NET 8 SDK
 
-# Clone Repository
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/noa1020/FinancialMonitor.git
@@ -25,9 +34,10 @@ git clone https://github.com/noa1020/FinancialMonitor.git
 cd FinancialMonitor
 ```
 
-# Run Application
 
-Start all services:
+## Run Application
+
+Start all services using Docker Compose:
 
 ```bash
 docker compose up --build
@@ -53,15 +63,26 @@ Swagger:
 http://localhost:8080/swagger
 ```
 
+
 Stop containers:
 
 ```bash
 docker compose down
 ```
 
-# Application Routes
 
-## Transaction Simulator
+## Docker Services
+
+Docker Compose starts:
+
+- React frontend container
+- .NET Web API backend container
+- SQLite database volume for persistence
+
+
+## Application Routes
+
+### Transaction Simulator
 
 ```
 /add
@@ -69,7 +90,8 @@ docker compose down
 
 Creates mock transactions and sends them to the backend API.
 
-## Live Dashboard
+
+### Live Dashboard
 
 ```
 /monitor
@@ -77,18 +99,13 @@ Creates mock transactions and sends them to the backend API.
 
 Displays real-time transaction updates using SignalR.
 
-# Run Tests
+
+## Run Tests
 
 Navigate to the test project:
 
 ```bash
 cd FinancialMonitor.Tests
-```
-
-Restore dependencies:
-
-```bash
-dotnet restore
 ```
 
 Run tests:
@@ -99,10 +116,11 @@ dotnet test
 
 Tests cover:
 
-* Transaction processing
-* Failed transactions
-* Concurrent requests
-* Repository persistence
+- Transaction processing
+- Failed transactions
+- Concurrent requests
+- Repository persistence
+
 
 # Cloud-Native & Distributed Architecture (Bonus)
 
@@ -119,6 +137,7 @@ Client B --> Pod B
 ```
 
 A transaction processed by Pod A will not automatically reach clients connected to Pod B.
+
 
 ## Solution
 
@@ -142,11 +161,13 @@ Architecture:
 
 The message broker synchronizes transaction events between backend replicas.
 
+
 Possible production solutions:
 
-* Redis Pub/Sub with SignalR Backplane
-* Kafka event streaming
-* Azure SignalR Service
+- Redis Pub/Sub with SignalR Backplane
+- Kafka event streaming
+- Azure SignalR Service
+
 
 # Kubernetes Deployment (Bonus)
 
