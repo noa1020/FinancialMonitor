@@ -6,7 +6,6 @@ Install:
 
 * .NET 8 SDK
 * Node.js 20+
-* SQL Server
 * Docker (optional)
 * Kubernetes (optional)
 
@@ -26,7 +25,7 @@ git clone <repository-url>
 cd FinancialMonitor
 ```
 
-## Backend Setup
+# Backend Setup
 
 Navigate to API project:
 
@@ -34,19 +33,13 @@ Navigate to API project:
 cd FinancialMonitor.Api
 ```
 
-Restore packages:
+Restore dependencies:
 
 ```bash
 dotnet restore
 ```
 
-Update the SQL Server connection string in:
-
-```text
-appsettings.json
-```
-
-Create database schema:
+Create SQLite database:
 
 ```bash
 dotnet ef database update
@@ -64,7 +57,7 @@ Backend runs on:
 https://localhost:7213
 ```
 
-## Frontend Setup
+# Frontend Setup
 
 Open another terminal:
 
@@ -90,7 +83,7 @@ Frontend runs on:
 http://localhost:5173
 ```
 
-## Run Tests
+# Run Tests
 
 Navigate to test project:
 
@@ -98,7 +91,7 @@ Navigate to test project:
 cd FinancialMonitor.Tests
 ```
 
-Restore packages:
+Restore dependencies:
 
 ```bash
 dotnet restore
@@ -112,9 +105,9 @@ dotnet test
 
 # Cloud-Native & Distributed Architecture
 
-## Distributed Synchronization
+## Distributed Synchronization Problem
 
-When deploying multiple backend replicas, each pod has its own SignalR connections.
+When running multiple backend replicas, each instance owns its local SignalR connections.
 
 Example:
 
@@ -128,7 +121,7 @@ A transaction processed by Pod A will not automatically reach clients connected 
 
 ## Solution
 
-Use a distributed messaging layer between transaction processing and SignalR servers.
+Use a distributed messaging layer between transaction processing and SignalR instances.
 
 Architecture:
 
@@ -148,17 +141,17 @@ Clients   Clients
 ```
 
 The message broker distributes transaction events between replicas.
-Each backend instance receives the event and broadcasts it to its connected clients.
+Each backend instance receives the event and broadcasts it to connected clients.
 
 Possible production solutions:
 
 * Redis Pub/Sub with SignalR Backplane
-* Kafka
+* Kafka event streaming
 * Azure SignalR Service
 
-# Docker
+# Docker Deployment
 
-Build:
+Build image:
 
 ```bash
 docker build -t financial-monitor .
@@ -170,9 +163,9 @@ Run:
 docker run -p 8080:8080 financial-monitor
 ```
 
-# Kubernetes
+# Kubernetes Deployment
 
-Deployment manifests:
+Manifests:
 
 ```
 k8s/
