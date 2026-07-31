@@ -100,7 +100,7 @@ Creates mock transactions and sends them to the backend API.
 Displays real-time transaction updates using SignalR.
 
 
-## Run Tests
+# Run Tests
 
 Navigate to the test project:
 
@@ -126,6 +126,8 @@ Tests cover:
 
 ## SignalR Scale-Out Problem
 
+The current MVP runs with a single backend instance.
+
 When deploying multiple backend replicas, each instance manages only its own connected clients.
 
 Example:
@@ -139,9 +141,9 @@ Client B --> Pod B
 A transaction processed by Pod A will not automatically reach clients connected to Pod B.
 
 
-## Solution
+## Proposed Solution
 
-Use a distributed messaging layer as a SignalR backplane.
+For a production-scale deployment, a distributed messaging layer can be used as a SignalR backplane.
 
 Architecture:
 
@@ -159,7 +161,7 @@ Architecture:
     Clients                 Clients
 ```
 
-The message broker synchronizes transaction events between backend replicas.
+The message broker synchronizes transaction events between backend replicas, allowing all SignalR instances to broadcast updates to their connected clients.
 
 
 Possible production solutions:
