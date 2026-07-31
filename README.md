@@ -20,7 +20,7 @@ For running tests locally:
 # Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/noa1020/FinancialMonitor.git
 
 cd FinancialMonitor
 ```
