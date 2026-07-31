@@ -13,8 +13,6 @@ public class TransactionServiceTests
     [Fact]
     public async Task CreateAsync_ShouldCreateTransactionAndBroadcastUpdates()
     {
-        // Arrange
-
         var repository =
             new Mock<ITransactionRepository>();
 
@@ -32,14 +30,10 @@ public class TransactionServiceTests
             Currency = Currency.USD
         };
 
-        // Act
-
         var result =
             await service.CreateAsync(
                 request,
                 CancellationToken.None);
-
-        // Assert
 
         result.Should()
             .NotBeNull();
@@ -76,8 +70,6 @@ public class TransactionServiceTests
     [Fact]
     public async Task CreateAsync_WithInvalidAmount_ShouldCreateFailedTransaction()
     {
-        // Arrange
-
         var repository =
             new Mock<ITransactionRepository>();
 
@@ -95,14 +87,10 @@ public class TransactionServiceTests
             Currency = Currency.USD
         };
 
-        // Act
-
         var result =
             await service.CreateAsync(
                 request,
                 CancellationToken.None);
-
-        // Assert
 
         result.Status
             .Should()
@@ -117,8 +105,6 @@ public class TransactionServiceTests
     [Fact]
     public async Task CreateAsync_ShouldHandleConcurrentRequests()
     {
-        // Arrange
-
         var repository =
             new Mock<ITransactionRepository>();
 
@@ -129,8 +115,6 @@ public class TransactionServiceTests
             new TransactionService(
                 repository.Object,
                 broadcaster.Object);
-
-        // Act
 
         var tasks = Enumerable.Range(0, 100)
             .Select(_ =>
@@ -144,8 +128,6 @@ public class TransactionServiceTests
 
         var results =
             await Task.WhenAll(tasks);
-
-        // Assert
 
         results.Should()
             .HaveCount(100);

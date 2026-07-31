@@ -1,32 +1,29 @@
-.monitor-page{
-    max-width:1200px;
-    margin:auto;
-    padding:32px;
+.monitor-page {
+    max-width: 1200px;
+    margin: auto;
+    padding: 32px;
 }
 
-.monitor-header{
-    margin-bottom:24px;
+.monitor-header {
+    margin-bottom: 24px;
 }
 
-.monitor-header h1{
-    margin:0;
-    font-size:34px;
-    color:#1e293b;
+.monitor-header h1 {
+    margin: 0;
+    font-size: 34px;
+    color: #1e293b;
 }
 
-.monitor-header p{
-    margin-top:8px;
-    color:#64748b;
+.monitor-header p {
+    margin-top: 8px;
+    color: #64748b;
 }
 
-@media(max-width:700px){
-
-.monitor-page{
-    padding:18px;
-}
-
-.monitor-header h1{
-    font-size:26px;
-}
-
+@media(max-width:700px) {
+    .monitor-page {
+        padding: 18px;
+    }
+    .monitor-header h1 {
+        font-size: 26px;
+    }
 }

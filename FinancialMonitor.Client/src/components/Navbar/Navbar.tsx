@@ -1,26 +1,21 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
-export default function Navbar(){
-
-    return(
-
+export default function Navbar() {
+    return (
         <header className="navbar">
-
             <div className="navbar-container">
-
                 <h2>
                     Financial Monitor
                 </h2>
 
                 <nav>
-
                     <NavLink
                         to="/add"
-                        className={({isActive})=>
+                        className={({ isActive }) =>
                             isActive
-                            ?"active"
-                            :""
+                                ? "active"
+                                : ""
                         }
                     >
                         Add Transaction
@@ -28,21 +23,16 @@ export default function Navbar(){
 
                     <NavLink
                         to="/monitor"
-                        className={({isActive})=>
+                        className={({ isActive }) =>
                             isActive
-                            ?"active"
-                            :""
+                                ? "active"
+                                : ""
                         }
                     >
                         Live Monitor
                     </NavLink>
-
                 </nav>
-
             </div>
-
         </header>
-
     );
-
 }

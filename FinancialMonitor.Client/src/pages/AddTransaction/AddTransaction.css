@@ -99,13 +99,10 @@ button:disabled{
 }
 
 @media(max-width:600px){
-
     .add-card{
         padding:24px;
     }
-
     .add-card h1{
         font-size:24px;
     }
-
 }

@@ -4,6 +4,5 @@ export const Currency = {
     ILS: 2
 } as const;
 
-
 export type Currency =
     typeof Currency[keyof typeof Currency];

@@ -20,7 +20,6 @@ public class TransactionRepositoryTests
         return new AppDbContext(options);
     }
 
-
     [Fact]
     public async Task AddAsync_ShouldStoreTransaction()
     {
@@ -29,7 +28,6 @@ public class TransactionRepositoryTests
 
         var repository =
             new TransactionRepository(context);
-
 
         var transaction =
             new Transaction
@@ -41,7 +39,6 @@ public class TransactionRepositoryTests
                 Timestamp = DateTime.UtcNow
             };
 
-
         await repository.AddAsync(
             transaction,
             CancellationToken.None);
@@ -49,11 +46,9 @@ public class TransactionRepositoryTests
         await repository.SaveChangesAsync(
             CancellationToken.None);
 
-
         var result =
             await context.Transactions
                 .FirstOrDefaultAsync();
-
 
         result.Should()
             .NotBeNull();
@@ -67,13 +62,11 @@ public class TransactionRepositoryTests
             .Be(Currency.USD);
     }
 
-
     [Fact]
     public async Task UpdateAsync_ShouldUpdateExistingTransaction()
     {
         await using var context =
             CreateContext();
-
 
         var transaction =
             new Transaction
@@ -85,19 +78,15 @@ public class TransactionRepositoryTests
                 Timestamp = DateTime.UtcNow
             };
 
-
         context.Transactions.Add(transaction);
 
         await context.SaveChangesAsync();
 
-
         var repository =
             new TransactionRepository(context);
 
-
         transaction.Status =
             TransactionStatus.Completed;
-
 
         await repository.UpdateAsync(
             transaction,
@@ -106,11 +95,9 @@ public class TransactionRepositoryTests
         await repository.SaveChangesAsync(
             CancellationToken.None);
 
-
         var result =
             await context.Transactions
                 .FirstAsync();
-
 
         result.Status
             .Should()

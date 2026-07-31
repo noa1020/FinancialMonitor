@@ -4,6 +4,5 @@ export const TransactionStatus = {
     Failed: 2
 } as const;
 
-
 export type TransactionStatus =
     typeof TransactionStatus[keyof typeof TransactionStatus];

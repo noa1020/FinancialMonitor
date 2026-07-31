@@ -12,32 +12,22 @@ import Monitor from "./pages/Monitor/Monitor";
 export default function App(){
 
     return(
-
         <BrowserRouter>
-
             <Navbar/>
-
             <Routes>
-
                 <Route
                     path="/"
                     element={<Navigate to="/monitor"/>}
                 />
-
                 <Route
                     path="/add"
                     element={<AddTransaction/>}
                 />
-
                 <Route
                     path="/monitor"
                     element={<Monitor/>}
                 />
-
             </Routes>
-
         </BrowserRouter>
-
     );
-
 }

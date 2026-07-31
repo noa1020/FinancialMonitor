@@ -1,6 +1,5 @@
 using FinancialMonitor.Api.DTOs;
 using FinancialMonitor.Api.Entities;
-using FinancialMonitor.Api.Enums;
 using FinancialMonitor.Api.Repositories;
 
 namespace FinancialMonitor.Api.Services;
@@ -38,13 +37,10 @@ public class TransactionService : ITransactionService
         await _repository.SaveChangesAsync(
             cancellationToken);
 
-
         await _broadcaster.BroadcastAsync(
             transaction);
 
-
         transaction.Status = await ProcessAsync(transaction);
-
 
         await _repository.UpdateAsync(
             transaction,
@@ -53,14 +49,11 @@ public class TransactionService : ITransactionService
         await _repository.SaveChangesAsync(
             cancellationToken);
 
-
         await _broadcaster.BroadcastAsync(
             transaction);
 
-
         return transaction;
     }
-
 
     private static async Task<TransactionStatus> ProcessAsync(
         Transaction transaction)

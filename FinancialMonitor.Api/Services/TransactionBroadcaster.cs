@@ -14,7 +14,6 @@ public class TransactionBroadcaster : ITransactionBroadcaster
         _hub = hub;
     }
 
-
     public async Task BroadcastAsync(
         Transaction transaction)
     {

@@ -6,19 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Controllers
 builder.Services.AddControllers();
-
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 // SignalR
 builder.Services.AddSignalR();
-
 
 // CORS for React
 builder.Services.AddCors(options =>
@@ -37,7 +33,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-
 // SQLite Database
 builder.Services.AddDbContext<AppDbContext>(
     options =>
@@ -46,7 +41,6 @@ builder.Services.AddDbContext<AppDbContext>(
                 .GetConnectionString("DefaultConnection")
         )
 );
-
 
 // Dependency Injection
 builder.Services.AddScoped<
@@ -61,9 +55,7 @@ builder.Services.AddScoped<
     ITransactionBroadcaster,
     TransactionBroadcaster>();
 
-
 var app = builder.Build();
-
 
 // Swagger
 if (app.Environment.IsDevelopment())
@@ -72,23 +64,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 // HTTPS
 app.UseHttpsRedirection();
-
 
 // CORS
 app.UseCors("ReactApp");
 
-
 // Controllers
 app.MapControllers();
-
 
 // SignalR Hub
 app.MapHub<TransactionHub>(
     "/transactionHub"
 );
-
 
 app.Run();

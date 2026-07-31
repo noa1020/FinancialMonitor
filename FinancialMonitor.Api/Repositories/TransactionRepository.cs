@@ -13,7 +13,6 @@ public class TransactionRepository : ITransactionRepository
         _db = db;
     }
 
-
     public async Task AddAsync(
         Transaction transaction,
         CancellationToken cancellationToken)
@@ -23,7 +22,6 @@ public class TransactionRepository : ITransactionRepository
             cancellationToken);
     }
 
-
     public Task UpdateAsync(
         Transaction transaction,
         CancellationToken cancellationToken)
@@ -32,7 +30,6 @@ public class TransactionRepository : ITransactionRepository
 
         return Task.CompletedTask;
     }
-
 
     public async Task SaveChangesAsync(
         CancellationToken cancellationToken)
