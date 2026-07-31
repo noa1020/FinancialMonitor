@@ -1,6 +1,6 @@
 import { Currency } from "../enums/currency";
 
-const API_URL="https://localhost:7213/api/transactions";
+const API_URL =`${import.meta.env.VITE_API_URL}/api/transactions`;
 
 export async function createTransaction(
     amount:number,

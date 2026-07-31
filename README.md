@@ -2,46 +2,22 @@
 
 Real-Time Financial Monitor MVP built with:
 
-- Backend: .NET 8 Web API + SignalR
-- Database: SQLite + Entity Framework Core
-- Frontend: React + TypeScript
-- Testing: xUnit + Moq + FluentAssertions
-
-
-## Project Structure
-
-```
-FinancialMonitor
-│
-├── FinancialMonitor.Api        # .NET Backend
-├── FinancialMonitor.Client     # React Frontend
-├── FinancialMonitor.Tests      # Unit Tests
-├── k8s                         # Kubernetes manifests
-├── docs                        # Architecture decisions
-└── Dockerfile
-```
-
+* Backend: .NET 8 Web API + SignalR
+* Database: SQLite + Entity Framework Core
+* Frontend: React + TypeScript
+* Testing: xUnit + Moq + FluentAssertions
 
 # Prerequisites
 
-Install:
+For running with Docker:
 
-- .NET 8 SDK
-- Node.js 20+
-- Docker (optional)
-- Kubernetes (optional)
+* Docker Desktop
 
+For running tests locally:
 
-Install Entity Framework CLI:
+* .NET 8 SDK
 
-```bash
-dotnet tool install --global dotnet-ef
-```
-
-
-# Run Locally
-
-## Clone Repository
+# Clone Repository
 
 ```bash
 git clone <repository-url>
@@ -49,76 +25,43 @@ git clone <repository-url>
 cd FinancialMonitor
 ```
 
+# Run Application
 
-# Backend Setup
-
-Navigate to API project:
-
-```bash
-cd FinancialMonitor.Api
-```
-
-Restore dependencies:
+Start all services:
 
 ```bash
-dotnet restore
+docker compose up --build
 ```
 
-Create SQLite database:
+The application will start:
 
-```bash
-dotnet ef database update
-```
-
-Run backend:
-
-```bash
-dotnet run
-```
-
-Backend runs on:
+Frontend:
 
 ```
-https://localhost:7213
+http://localhost:3000
+```
+
+Backend API:
+
+```
+http://localhost:8080
 ```
 
 Swagger:
 
 ```
-https://localhost:7213/swagger
+http://localhost:8080/swagger
 ```
 
-
-# Frontend Setup
-
-Open another terminal:
+Stop containers:
 
 ```bash
-cd FinancialMonitor.Client
+docker compose down
 ```
 
-Install dependencies:
+# Application Routes
 
-```bash
-npm install
-```
-
-Run:
-
-```bash
-npm run dev
-```
-
-Frontend runs on:
-
-```
-http://localhost:5173
-```
-
-
-## Application Routes
-
-### Transaction Simulator
+## Transaction Simulator
 
 ```
 /add
@@ -126,8 +69,7 @@ http://localhost:5173
 
 Creates mock transactions and sends them to the backend API.
 
-
-### Live Dashboard
+## Live Dashboard
 
 ```
 /monitor
@@ -135,10 +77,9 @@ Creates mock transactions and sends them to the backend API.
 
 Displays real-time transaction updates using SignalR.
 
-
 # Run Tests
 
-Navigate to test project:
+Navigate to the test project:
 
 ```bash
 cd FinancialMonitor.Tests
@@ -158,11 +99,10 @@ dotnet test
 
 Tests cover:
 
-- Transaction processing
-- Failed transactions
-- Concurrent requests
-- Repository persistence
-
+* Transaction processing
+* Failed transactions
+* Concurrent requests
+* Repository persistence
 
 # Cloud-Native & Distributed Architecture (Bonus)
 
@@ -180,7 +120,6 @@ Client B --> Pod B
 
 A transaction processed by Pod A will not automatically reach clients connected to Pod B.
 
-
 ## Solution
 
 Use a distributed messaging layer as a SignalR backplane.
@@ -189,7 +128,6 @@ Architecture:
 
 ```
              Transaction API
-                    |
                     |
              Message Broker
           (Redis Pub/Sub / Kafka)
@@ -206,25 +144,9 @@ The message broker synchronizes transaction events between backend replicas.
 
 Possible production solutions:
 
-- Redis Pub/Sub with SignalR Backplane
-- Kafka event streaming
-- Azure SignalR Service
-
-
-# Docker Deployment (Bonus)
-
-Build image:
-
-```bash
-docker build -t financial-monitor .
-```
-
-Run:
-
-```bash
-docker run -p 8080:8080 financial-monitor
-```
-
+* Redis Pub/Sub with SignalR Backplane
+* Kafka event streaming
+* Azure SignalR Service
 
 # Kubernetes Deployment (Bonus)
 

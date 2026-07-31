@@ -1,0 +1,22 @@
+services:
+
+  api:
+    build:
+      context: ./FinancialMonitor.Api
+    ports:
+      - "8080:8080"
+    volumes:
+      - db-data:/app
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./FinancialMonitor.Client
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  db-data:

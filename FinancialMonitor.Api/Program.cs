@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 // SignalR
 builder.Services.AddSignalR();
 
-// CORS for local React development
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactApp",
@@ -57,6 +57,17 @@ builder.Services.AddScoped<
 
 var app = builder.Build();
 
+
+// Create database tables inside Docker container
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider
+        .GetRequiredService<AppDbContext>();
+
+    db.Database.EnsureCreated();
+}
+
+
 // Swagger
 if (app.Environment.IsDevelopment())
 {
@@ -64,18 +75,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// HTTPS
-app.UseHttpsRedirection();
+
+// Disable HTTPS redirect for Docker
+// app.UseHttpsRedirection();
+
 
 // CORS
 app.UseCors("ReactApp");
 
+
 // Controllers
 app.MapControllers();
+
 
 // SignalR
 app.MapHub<TransactionHub>(
     "/transactionHub"
 );
+
 
 app.Run();

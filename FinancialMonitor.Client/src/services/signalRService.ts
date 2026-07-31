@@ -6,27 +6,26 @@ import {
 } from "@microsoft/signalr";
 import type { Transaction } from "../models/transaction";
 
-const HUB_URL="https://localhost:7213/transactionHub";
-
-let connection:HubConnection|null=null;
-let starting:Promise<void>|null=null;
+const HUB_URL = `${import.meta.env.VITE_API_URL}/transactionHub`;
+let connection: HubConnection | null = null;
+let starting: Promise<void> | null = null;
 
 export async function startSignalR(
-    onReceive:(transaction:Transaction)=>void
-){
+    onReceive: (transaction: Transaction) => void
+) {
 
-    if(
+    if (
         connection &&
-        connection.state===HubConnectionState.Connected
-    ){
+        connection.state === HubConnectionState.Connected
+    ) {
         return;
     }
 
-    if(starting){
+    if (starting) {
         return starting;
     }
 
-    connection=new HubConnectionBuilder()
+    connection = new HubConnectionBuilder()
         .withUrl(HUB_URL)
         .withAutomaticReconnect()
         .configureLogging(LogLevel.Information)
@@ -37,24 +36,24 @@ export async function startSignalR(
         onReceive
     );
 
-    starting=connection
+    starting = connection
         .start()
-        .finally(()=>{
-            starting=null;
+        .finally(() => {
+            starting = null;
         });
 
     await starting;
 }
 
-export async function stopSignalR(){
+export async function stopSignalR() {
 
-    if(!connection){
+    if (!connection) {
         return;
     }
 
-    if(connection.state!==HubConnectionState.Disconnected){
+    if (connection.state !== HubConnectionState.Disconnected) {
         await connection.stop();
     }
 
-    connection=null;
+    connection = null;
 }
