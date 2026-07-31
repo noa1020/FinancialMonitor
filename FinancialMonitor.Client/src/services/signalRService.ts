@@ -6,7 +6,8 @@ import {
 } from "@microsoft/signalr";
 import type { Transaction } from "../models/transaction";
 
-const HUB_URL = `${import.meta.env.VITE_API_URL}/transactionHub`;
+const HUB_URL = "http://localhost:8080/transactionHub";
+
 let connection: HubConnection | null = null;
 let starting: Promise<void> | null = null;
 
