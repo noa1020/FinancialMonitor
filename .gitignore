@@ -25,6 +25,8 @@ obj/
 # Entity Framework
 
 **/Migrations/*Snapshot.cs
+*.db
+*.sqlite
 
 # Test Results
 
