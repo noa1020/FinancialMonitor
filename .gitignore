@@ -1,0 +1,85 @@
+# Visual Studio / .NET
+
+.vs/
+**/.vs/
+
+bin/
+obj/
+
+**/bin/
+**/obj/
+
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# .NET build files
+
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+
+# Entity Framework
+
+**/Migrations/*Snapshot.cs
+
+# Test Results
+
+TestResults/
+**/TestResults/
+
+*.trx
+
+# Node / React
+
+node_modules/
+
+**/node_modules/
+
+dist/
+
+**/dist/
+
+build/
+
+**/build/
+
+# Vite
+
+.vite/
+
+*.local
+
+# Environment files
+
+.env
+.env.*
+!.env.example
+
+# IDE
+
+.vscode/
+
+.idea/
+
+*.swp
+
+# OS
+
+.DS_Store
+Thumbs.db
+
+# Docker
+
+docker-compose.override.yml
+
+# Logs
+
+logs/
+*.log
+
+```
+```
