@@ -1,88 +1,61 @@
-.table-card{
-    background:white;
-    border-radius:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    overflow:auto;
+.table-card {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    overflow: auto;
 }
 
-.transaction-table{
-    width:100%;
-    border-collapse:collapse;
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.transaction-table th{
-    background:#eff6ff;
-    color:#334155;
-    padding:16px;
-    text-align:left;
+.transaction-table th {
+    background: #eff6ff;
+    color: #334155;
+    padding: 16px;
+    text-align: left;
 }
 
-.transaction-table td{
-    padding:16px;
-    border-top:1px solid #e5e7eb;
+.transaction-table td {
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
 }
 
-.transaction-table tbody tr{
-    transition:.35s;
+.transaction-table tbody tr {
+    transition: .35s;
 }
 
-.transaction-table tbody tr:hover{
-    background:#f8fafc;
+.transaction-table tbody tr:hover {
+    background: #f8fafc;
 }
 
-.new-row{
-    animation:newTransaction .8s ease;
+/* Animation for newly received transactions */
+.new-row {
+    animation: flash .8s ease;
 }
 
-@keyframes newTransaction{
+@keyframes flash {
+    0% {
+        transform: scale(.96);
+        background: #dbeafe;
+    }
 
-0%{
-opacity:0;
-transform:translateY(-18px);
-background:#bfdbfe;
+    40% {
+        transform: scale(1.02);
+        background: #bfdbfe;
+    }
+
+    100% {
+        transform: scale(1);
+        background: white;
+    }
 }
 
-40%{
-background:#dbeafe;
-}
-
-100%{
-opacity:1;
-transform:translateY(0);
-background:transparent;
-}
-
-}
-
-@media(max-width:700px){
-
-.transaction-table th,
-.transaction-table td{
-padding:12px;
-font-size:14px;
-}
-
-}
-
-.new-row{
-    animation:flash .8s ease;
-}
-
-@keyframes flash{
-
-0%{
-transform:scale(.96);
-background:#dbeafe;
-}
-
-40%{
-transform:scale(1.02);
-background:#bfdbfe;
-}
-
-100%{
-transform:scale(1);
-background:white;
-}
-
+@media(max-width: 700px) {
+    .transaction-table th,
+    .transaction-table td {
+        padding: 12px;
+        font-size: 14px;
+    }
 }
