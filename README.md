@@ -1,19 +1,43 @@
 # Financial Monitor
 
-## Prerequisites
+Real-Time Financial Monitor MVP built with:
+
+- Backend: .NET 8 Web API + SignalR
+- Database: SQLite + Entity Framework Core
+- Frontend: React + TypeScript
+- Testing: xUnit + Moq + FluentAssertions
+
+
+## Project Structure
+
+```
+FinancialMonitor
+│
+├── FinancialMonitor.Api        # .NET Backend
+├── FinancialMonitor.Client     # React Frontend
+├── FinancialMonitor.Tests      # Unit Tests
+├── k8s                         # Kubernetes manifests
+├── docs                        # Architecture decisions
+└── Dockerfile
+```
+
+
+# Prerequisites
 
 Install:
 
-* .NET 8 SDK
-* Node.js 20+
-* Docker (optional)
-* Kubernetes (optional)
+- .NET 8 SDK
+- Node.js 20+
+- Docker (optional)
+- Kubernetes (optional)
+
 
 Install Entity Framework CLI:
 
 ```bash
 dotnet tool install --global dotnet-ef
 ```
+
 
 # Run Locally
 
@@ -24,6 +48,7 @@ git clone <repository-url>
 
 cd FinancialMonitor
 ```
+
 
 # Backend Setup
 
@@ -53,9 +78,16 @@ dotnet run
 
 Backend runs on:
 
-```text
+```
 https://localhost:7213
 ```
+
+Swagger:
+
+```
+https://localhost:7213/swagger
+```
+
 
 # Frontend Setup
 
@@ -79,9 +111,30 @@ npm run dev
 
 Frontend runs on:
 
-```text
+```
 http://localhost:5173
 ```
+
+
+## Application Routes
+
+### Transaction Simulator
+
+```
+/add
+```
+
+Creates mock transactions and sends them to the backend API.
+
+
+### Live Dashboard
+
+```
+/monitor
+```
+
+Displays real-time transaction updates using SignalR.
+
 
 # Run Tests
 
@@ -103,11 +156,19 @@ Run tests:
 dotnet test
 ```
 
-# Cloud-Native & Distributed Architecture
+Tests cover:
 
-## Distributed Synchronization Problem
+- Transaction processing
+- Failed transactions
+- Concurrent requests
+- Repository persistence
 
-When running multiple backend replicas, each instance owns its local SignalR connections.
+
+# Cloud-Native & Distributed Architecture (Bonus)
+
+## SignalR Scale-Out Problem
+
+When deploying multiple backend replicas, each instance manages only its own connected clients.
 
 Example:
 
@@ -119,37 +180,38 @@ Client B --> Pod B
 
 A transaction processed by Pod A will not automatically reach clients connected to Pod B.
 
+
 ## Solution
 
-Use a distributed messaging layer between transaction processing and SignalR instances.
+Use a distributed messaging layer as a SignalR backplane.
 
 Architecture:
 
 ```
-Transaction API
-        |
-        v
- Message Broker
-(Kafka / Redis PubSub)
-        |
-   +----+----+
-   |         |
- Pod A     Pod B
-SignalR   SignalR
-   |         |
-Clients   Clients
+             Transaction API
+                    |
+                    |
+             Message Broker
+          (Redis Pub/Sub / Kafka)
+                    |
+        +-----------+-----------+
+        |                       |
+      Pod A                   Pod B
+    SignalR                 SignalR
+        |                       |
+    Clients                 Clients
 ```
 
-The message broker distributes transaction events between replicas.
-Each backend instance receives the event and broadcasts it to connected clients.
+The message broker synchronizes transaction events between backend replicas.
 
 Possible production solutions:
 
-* Redis Pub/Sub with SignalR Backplane
-* Kafka event streaming
-* Azure SignalR Service
+- Redis Pub/Sub with SignalR Backplane
+- Kafka event streaming
+- Azure SignalR Service
 
-# Docker Deployment
+
+# Docker Deployment (Bonus)
 
 Build image:
 
@@ -163,14 +225,15 @@ Run:
 docker run -p 8080:8080 financial-monitor
 ```
 
-# Kubernetes Deployment
 
-Manifests:
+# Kubernetes Deployment (Bonus)
+
+Kubernetes manifests:
 
 ```
 k8s/
- ├── deployment.yaml
- └── service.yaml
+├── deployment.yaml
+└── service.yaml
 ```
 
 Deploy:
