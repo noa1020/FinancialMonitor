@@ -40,11 +40,7 @@ public class TransactionService : ITransactionService
         await _broadcaster.BroadcastAsync(
             transaction);
 
-        transaction.Status = await ProcessAsync(transaction);
-
-        await _repository.UpdateAsync(
-            transaction,
-            cancellationToken);
+        transaction.Status = await ProcessTransactionAsync(transaction);
 
         await _repository.SaveChangesAsync(
             cancellationToken);
@@ -55,7 +51,7 @@ public class TransactionService : ITransactionService
         return transaction;
     }
 
-    private static async Task<TransactionStatus> ProcessAsync(
+    private static async Task<TransactionStatus> ProcessTransactionAsync(
         Transaction transaction)
     {
         // Business rules will be added here

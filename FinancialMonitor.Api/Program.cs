@@ -16,17 +16,17 @@ builder.Services.AddSwaggerGen();
 // SignalR
 builder.Services.AddSignalR();
 
-// CORS for React
+// CORS for local React development
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactApp",
         policy =>
         {
             policy
-                .WithOrigins(
-                    "http://localhost:5173",
-                    "https://localhost:5173"
-                )
+                .SetIsOriginAllowed(origin =>
+                {
+                    return new Uri(origin).Host == "localhost";
+                })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
@@ -73,7 +73,7 @@ app.UseCors("ReactApp");
 // Controllers
 app.MapControllers();
 
-// SignalR Hub
+// SignalR
 app.MapHub<TransactionHub>(
     "/transactionHub"
 );
